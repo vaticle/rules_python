@@ -1,0 +1,6 @@
+Based-on: bazelbuild/rules-python#708ed8679d7510a331ce9a7b910a2a056d24f7b1
+Merged-in: 
+- Patch from jkinkead/rules_python#purelib_experiment which allows installing Tensorflow
+Reset-when: 
+- Upstream supports installing purelib libraries such as Tensorflow
+
