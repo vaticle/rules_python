@@ -34,29 +34,10 @@ def _pip_import_impl(repository_ctx, binary_name):
   if result.return_code:
     fail("pip_import failed: %s (%s)" % (result.stdout, result.stderr))
 
-def _pip_system_import_impl(repository_ctx):
-  """System python implementation."""
-  _pip_import_impl(repository_ctx, "python")
 
 def _pip3_import_impl(repository_ctx):
   """Python 3 implementation."""
   _pip_import_impl(repository_ctx, "python3")
-
-pip_import = repository_rule(
-    attrs = {
-        "requirements": attr.label(
-            allow_files = True,
-            mandatory = True,
-            single_file = True,
-        ),
-        "_script": attr.label(
-            executable = True,
-            default = Label("//tools:piptool.par"),
-            cfg = "host",
-        ),
-    },
-    implementation = _pip_system_import_impl,
-)
 
 """A rule for importing <code>requirements.txt</code> dependencies into Bazel.
 
