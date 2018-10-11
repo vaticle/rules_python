@@ -22,6 +22,14 @@ def _pip_import_impl(repository_ctx, binary_name):
   # requirements.bzl without it.
   repository_ctx.file("BUILD", "")
 
+  if not repository_ctx.which(binary_name):
+    print("%s has not been found. If you don't want to build anything Python-related, it is ok" % binary_name)
+    repository_ctx.file(
+      "requirements.bzl",
+      "def pip_install():\n  pass\ndef requirement(s):\n  return '//:dummy'"
+    )
+    return
+
   # To see the output, pass: quiet=False
   result = repository_ctx.execute([
     binary_name, repository_ctx.path(repository_ctx.attr._script),
